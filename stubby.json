@@ -1,0 +1,141 @@
+[
+  {
+    "request": {
+      "url": "^/api/menu$",
+      "method": "GET"
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": [
+        {
+          "label": "Dashboard",
+          "path": "/dashboard",
+          "icon": "dashboard",
+          "roles": ["ADMIN", "DRIVER"]
+        },
+        {
+          "label": "Gestión de Envíos",
+          "path": "/deliveries",
+          "icon": "local_shipping",
+          "roles": ["ADMIN", "DRIVER"]
+        },
+        {
+          "label": "Gestión de Flota",
+          "path": "/fleet",
+          "icon": "directions_car",
+          "roles": ["ADMIN"]
+        },
+        {
+          "label": "Alertas Meteorológicas",
+          "path": "/alerts",
+          "icon": "warning",
+          "roles": ["ADMIN", "DRIVER"]
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "url": "^/api/auth/login$",
+      "method": "POST"
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "token": "eyMockToken123456789",
+        "user": {
+          "id": 1,
+          "name": "Admin User",
+          "role": "ADMIN"
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "url": "^/api/deliveries$",
+      "method": "GET"
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": [
+        { "id": "DEL-001", "destination": "Calle Falsa 123", "status": "PENDING", "distance": 1500 },
+        { "id": "DEL-002", "destination": "Avenida Siempre Viva 742", "status": "IN_TRANSIT", "distance": 8500 },
+        { "id": "DEL-003", "destination": "Plaza Mayor 1", "status": "DELIVERED", "distance": 420 }
+      ]
+    }
+  },
+  {
+    "request": {
+      "url": "^/api/deliveries/DEL-001$",
+      "method": "GET"
+    },
+    "response": {
+      "status": 200,
+      "headers": { "Content-Type": "application/json" },
+      "body": { "id": "DEL-001", "destination": "Calle Falsa 123", "status": "PENDING", "distance": 1500, "customer": "Juan Pérez", "weight": 12 }
+    }
+  },
+  {
+    "request": {
+      "url": "^/api/deliveries/INVALID$",
+      "method": "GET"
+    },
+    "response": {
+      "status": 404,
+      "body": { "error": "Delivery not found" }
+    }
+  },
+  {
+    "request": {
+      "url": "^/api/alerts\\?region=.*$",
+      "method": "GET"
+    },
+    "response": {
+      "status": 200,
+      "headers": { "Content-Type": "application/json" },
+      "body": [
+        { "id": 1, "type": "WEATHER", "severity": "CRITICAL", "message": "Tormenta fuerte en zona norte." }
+      ]
+    }
+  },
+  {
+    "request": {
+      "url": "^/api/vehicles/VALID-PLATE$",
+      "method": "GET"
+    },
+    "response": {
+      "status": 200,
+      "body": { "plate": "VALID-PLATE", "capacity": 500 }
+    }
+  },
+  {
+    "request": {
+      "url": "^/api/vehicles/INVALID-PLATE$",
+      "method": "GET"
+    },
+    "response": {
+      "status": 404,
+      "body": { "error": "Vehicle not found" }
+    }
+  },
+  {
+    "request": {
+      "url": "^/api/error/401$",
+      "method": "GET"
+    },
+    "response": {
+      "status": 401,
+      "body": { "message": "Token expirado" }
+    }
+  }
+]
